@@ -17,7 +17,6 @@ import kotlinx.coroutines.launch
 import remote.lunar.remotedrive.data.model.FileItem
 import remote.lunar.remotedrive.data.remote.fetchRootFiles
 
-@OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun FileScreen(navController: NavController) {
@@ -48,50 +47,6 @@ fun FileScreen(navController: NavController) {
                     }
                 }
             }
-        }
-    }
-}
-
-@Composable
-fun FileItemView(file: FileItem, onClick: () -> Unit) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable { onClick() }
-            .padding(vertical = 8.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        // Ícone para pastas ou arquivos
-        val icon = if (file.IsFolder) Icons.Filled.Folder else Icons.Filled.InsertDriveFile
-        val iconColor = if (file.IsFolder) Color(0xFFFFD700) else Color(0xFF6200EE)
-
-        Icon(
-            icon,
-            contentDescription = null,
-            tint = iconColor,
-            modifier = Modifier.size(40.dp)
-        )
-
-        Spacer(modifier = Modifier.width(16.dp))
-
-        Column(
-            modifier = Modifier.weight(1f)
-        ) {
-            Text(
-                text = file.Name,
-                style = MaterialTheme.typography.bodyLarge,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
-            Text(
-                text = "Última modificação: ${file.DateModified}",
-                style = MaterialTheme.typography.bodySmall,
-                color = Color.Gray
-            )
-        }
-
-        IconButton(onClick = { /* Menu de opções */ }) {
-            Icon(Icons.Filled.MoreVert, contentDescription = "Opções")
         }
     }
 }

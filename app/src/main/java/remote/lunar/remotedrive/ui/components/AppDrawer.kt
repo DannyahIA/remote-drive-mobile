@@ -33,7 +33,7 @@ fun AppDrawer(
         ) {
             // Título "Google Drive"
             Text(
-                text = "Google Drive",
+                text = "Remote Drive",
                 style = MaterialTheme.typography.titleLarge.copy(fontSize = 24.sp),
                 modifier = Modifier.padding(bottom = 24.dp)
             )
