@@ -15,7 +15,7 @@ fun StarredScreen(navController: NavController) {
     ) {
         // Texto centralizado
         Text(
-            text = "Favoritos",
+            text = "Arquivos com estrela",
             fontSize = 30.sp,
             modifier = Modifier.align(Alignment.Center) // Alinhado ao centro da tela
         )

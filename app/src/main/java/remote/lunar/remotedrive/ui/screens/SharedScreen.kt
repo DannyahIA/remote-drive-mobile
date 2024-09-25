@@ -16,7 +16,7 @@ fun SharedScreen(navController: NavController) {
     ) {
         // Texto centralizado
         Text(
-            text = "Compartilhados",
+            text = "Arquivos Compartilhados",
             fontSize = 30.sp,
             modifier = Modifier.align(Alignment.Center) // Alinhado ao centro da tela
         )

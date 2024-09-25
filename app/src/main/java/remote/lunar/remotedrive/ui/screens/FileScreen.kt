@@ -34,7 +34,7 @@ fun FileScreen(navController: NavController) {
         Box(modifier = Modifier.fillMaxSize()) {
             if (fileList.isEmpty()) {
                 Text(
-                    text = "Nenhum arquivo",
+                    text = "Nenhum arquivo disponível",
                     modifier = Modifier.align(Alignment.Center)
                 )
             } else {
