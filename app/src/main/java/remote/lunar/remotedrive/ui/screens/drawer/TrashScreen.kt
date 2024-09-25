@@ -34,7 +34,7 @@ fun TrashScreen(navController: NavController) {
     ) {
         // Conteúdo da tela RecentScreen
         Box(modifier = Modifier.fillMaxSize()) {
-            Text(text = "Arquivos na Lixeira", modifier = Modifier.align(Alignment.Center))
+            Text(text = "Não há arquivos na lixeira", modifier = Modifier.align(Alignment.Center))
         }
     }
 }

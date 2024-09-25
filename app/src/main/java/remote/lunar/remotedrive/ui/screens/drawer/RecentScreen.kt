@@ -35,7 +35,7 @@ fun RecentScreen(navController: NavController) {
     ) {
         // Conteúdo da tela RecentScreen
         Box(modifier = Modifier.fillMaxSize()) {
-            Text(text = "Arquivos Recentes", modifier = Modifier.align(Alignment.Center))
+            Text(text = "Não há recentes", modifier = Modifier.align(Alignment.Center))
         }
     }
 }

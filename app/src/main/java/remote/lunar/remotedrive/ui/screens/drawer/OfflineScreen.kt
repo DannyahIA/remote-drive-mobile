@@ -35,7 +35,7 @@ fun OfflineScreen(navController: NavController) {
     ) {
         // Conteúdo da tela RecentScreen
         Box(modifier = Modifier.fillMaxSize()) {
-            Text(text = "Arquivos Offline", modifier = Modifier.align(Alignment.Center))
+            Text(text = "Nenhum arquivo disponível", modifier = Modifier.align(Alignment.Center))
         }
     }
 }

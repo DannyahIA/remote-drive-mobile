@@ -35,7 +35,7 @@ fun BackupScreen(navController: NavController) {
     ) {
         // Conteúdo da tela RecentScreen
         Box(modifier = Modifier.fillMaxSize()) {
-            Text(text = "Arquivos de Backup", modifier = Modifier.align(Alignment.Center))
+            Text(text = "Não há backups", modifier = Modifier.align(Alignment.Center))
         }
     }
 }
