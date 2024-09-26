@@ -3,6 +3,7 @@ package remote.lunar.remotedrive.ui.components
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Help
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -38,7 +39,7 @@ fun AppDrawer(
                 modifier = Modifier.padding(bottom = 24.dp)
             )
 
-            Divider(modifier = Modifier.padding(bottom = 16.dp))
+            HorizontalDivider(modifier = Modifier.padding(bottom = 16.dp))
 
             // Ícones e textos como no exemplo
             DrawerItem(
@@ -83,7 +84,7 @@ fun AppDrawer(
             )
             DrawerItem(
                 label = "Ajuda e feedback",
-                icon = Icons.Default.Help,
+                icon = Icons.AutoMirrored.Filled.Help,
                 onClick = {
                     navController.navigate("HelpFeedbackScreen")
                     onCloseDrawer()
@@ -100,11 +101,11 @@ fun AppDrawer(
                     color = Color.Gray
                 )
                 LinearProgressIndicator(
-                    progress = 9.04f / 15f,
+                    progress = { 9.04f / 15f },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 8.dp),
-                    color = Color(0xFFEA4335) // Cor semelhante ao da imagem
+                    color = Color(0xFFEA4335), // Cor semelhante ao da imagem
                 )
             }
         }

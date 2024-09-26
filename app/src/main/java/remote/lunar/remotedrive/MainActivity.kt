@@ -2,14 +2,16 @@
 
 package remote.lunar.remotedrive
 
+import TopBarWithSearch
 import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
@@ -67,16 +69,9 @@ fun MainScreen(
             // Exibe ou oculta a TopAppBar e BottomNav dependendo se estamos em uma tela do Drawer
             topBar = {
                 if (!isDrawerScreen) {
-                    TopAppBar(
-                        title = { Text(text = "RemoteDrive") },
-                        navigationIcon = {
-                            IconButton(onClick = {
-                                coroutineScope.launch { drawerState.open() }
-                            }) {
-                                Icon(Icons.Default.Menu, contentDescription = "Open Drawer")
-                            }
-                        }
-                    )
+                    TopBarWithSearch(onDrawerClick = {
+                        coroutineScope.launch { drawerState.open() }
+                    })
                 }
             },
             bottomBar = {
@@ -84,8 +79,10 @@ fun MainScreen(
                     BottomNavBar(navController)
                 }
             }
-        ) {
-            RemoteDriveNavHost(navController = navController)
+        ) { paddingValues ->
+            Box(modifier = Modifier.padding(paddingValues)) {
+                RemoteDriveNavHost(navController = navController)
+            }
         }
     }
 }

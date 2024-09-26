@@ -3,19 +3,45 @@ package remote.lunar.remotedrive.data.remote
 import okhttp3.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONArray
 import remote.lunar.remotedrive.data.model.FileItem
 import java.io.IOException
 
 val client = OkHttpClient()
+var url = "http://lunar-remote.ddns.net:8080"
 
 suspend fun fetchRootFiles(): List<FileItem> {
     return withContext(Dispatchers.IO) {
         // Definindo a URL para o endpoint do servidor
         val request = Request.Builder()
-            .url("http://lunar-remote.ddns.net:8080/file-manager/list-root-folders")
+            .url("$url/file-manager/list-root-folders")
+            .get()
+            .addHeader("Content-Type", "application/json")
+            .build()
+
+        try {
+            val response = client.newCall(request).execute()
+            if (response.isSuccessful) {
+                val responseBody = response.body?.string()
+                responseBody?.let {
+                    parseFiles(it)
+                } ?: emptyList()
+            } else {
+                emptyList()
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+
+            emptyList()
+        }
+    }
+}
+
+suspend fun fetchBackupFiles(): List<FileItem> {
+    return withContext(Dispatchers.IO) {
+        // Definindo a URL para o endpoint do servidor
+        val request = Request.Builder()
+            .url("$url/file-manager/list-backups")
             .get()
             .addHeader("Content-Type", "application/json")
             .build()
