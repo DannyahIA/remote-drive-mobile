@@ -1,15 +1,21 @@
 package remote.lunar.remotedrive.ui.screens.drawer
 
+import FileItemView
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import kotlinx.coroutines.launch
+import remote.lunar.remotedrive.data.model.FileItem
+import remote.lunar.remotedrive.data.remote.fetchTrashFiles
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -31,10 +37,33 @@ fun TrashScreen(navController: NavController) {
                 }
             )
         }
-    ) {
-        // Conteúdo da tela RecentScreen
-        Box(modifier = Modifier.fillMaxSize()) {
-            Text(text = "Não há arquivos na lixeira", modifier = Modifier.align(Alignment.Center))
+    ) { paddingValues ->
+        var trashFiles by remember { mutableStateOf<List<FileItem>>(emptyList()) }
+        val scope = rememberCoroutineScope()
+
+        LaunchedEffect(Unit) {
+            scope.launch {
+                trashFiles = fetchTrashFiles()
+            }
+        }
+
+        Box(modifier = Modifier
+            .fillMaxSize()
+            .padding(paddingValues)
+        ) {
+            if (trashFiles.isEmpty()) {
+                Text(text = "Não há arquivos na lixeira", modifier = Modifier.align(Alignment.Center))
+            } else {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(16.dp)
+                ) {
+                    items(trashFiles.size) { index ->
+                        FileItemView(file = trashFiles[index], onClick = { /* Ação ao clicar no item */ })
+                    }
+                }
+            }
         }
     }
 }

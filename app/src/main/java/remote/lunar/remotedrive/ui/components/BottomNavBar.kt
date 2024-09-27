@@ -12,10 +12,9 @@ import androidx.navigation.compose.rememberNavController
 @Composable
 fun BottomNavBar(navController: NavHostController) {
     val items = listOf(
-        BottomNavItem.Home,
+        BottomNavItem.Files,
         BottomNavItem.Starred,
-        BottomNavItem.Shared,
-        BottomNavItem.Files
+        BottomNavItem.Shared
     )
 
     NavigationBar {
@@ -39,10 +38,9 @@ fun BottomNavBar(navController: NavHostController) {
 }
 
 sealed class BottomNavItem(val label: String, val icon: androidx.compose.ui.graphics.vector.ImageVector, val route: String) {
-    object Home : BottomNavItem("Início", Icons.Default.Home, "HomeScreen")
+    object Files : BottomNavItem("Arquivos", Icons.Default.Folder, "FileScreen")
     object Starred : BottomNavItem("Com estrela", Icons.Default.Star, "StarredScreen")
     object Shared : BottomNavItem("Compartilhado", Icons.Default.Share, "SharedScreen")
-    object Files : BottomNavItem("Arquivos", Icons.Default.Folder, "FileScreen")
 }
 
 @Preview

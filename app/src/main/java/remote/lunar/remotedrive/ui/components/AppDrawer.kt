@@ -74,22 +74,6 @@ fun AppDrawer(
                     onCloseDrawer()
                 }
             )
-            DrawerItem(
-                label = "Configurações",
-                icon = Icons.Default.Settings,
-                onClick = {
-                    navController.navigate("SettingScreen")
-                    onCloseDrawer()
-                }
-            )
-            DrawerItem(
-                label = "Ajuda e feedback",
-                icon = Icons.AutoMirrored.Filled.Help,
-                onClick = {
-                    navController.navigate("HelpFeedbackScreen")
-                    onCloseDrawer()
-                }
-            )
 
             Spacer(modifier = Modifier.weight(1f))
 

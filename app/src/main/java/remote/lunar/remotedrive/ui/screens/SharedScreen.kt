@@ -17,24 +17,25 @@ import androidx.navigation.NavController
 import kotlinx.coroutines.launch
 import remote.lunar.remotedrive.data.model.FileItem
 import remote.lunar.remotedrive.data.remote.fetchRootFiles
+import remote.lunar.remotedrive.data.remote.fetchSharedFiles
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun SharedScreen(navController: NavController) {
-    var fileList by remember { mutableStateOf<List<FileItem>>(emptyList()) }
+    var sharedFiles by remember { mutableStateOf<List<FileItem>>(emptyList()) }
     val scope = rememberCoroutineScope()
 
     Scaffold {
         LaunchedEffect(Unit) {
             scope.launch {
-                fileList = fetchRootFiles()
+                sharedFiles = fetchSharedFiles()
             }
         }
 
         Box(modifier = Modifier.fillMaxSize()) {
-            if (fileList.isEmpty()) {
+            if (sharedFiles.isEmpty()) {
                 Text(
-                    text = "Nenhum arquivo disponível",
+                    text = "Nenhum arquivo compartilhado",
                     modifier = Modifier.align(Alignment.Center)
                 )
             } else {
@@ -43,8 +44,8 @@ fun SharedScreen(navController: NavController) {
                         .fillMaxSize()
                         .padding(16.dp)
                 ) {
-                    items(fileList.size) { index ->
-                        FileItemView(file = fileList[index], onClick = { /* Ação ao clicar no item */ })
+                    items(sharedFiles.size) { index ->
+                        FileItemView(file = sharedFiles[index], onClick = { /* Ação ao clicar no item */ })
                     }
                 }
             }

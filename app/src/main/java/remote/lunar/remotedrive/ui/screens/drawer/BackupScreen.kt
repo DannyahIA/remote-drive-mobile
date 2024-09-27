@@ -1,6 +1,5 @@
 package remote.lunar.remotedrive.ui.screens.drawer
 
-import FileItemView
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -20,9 +19,9 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
-import remote.lunar.remotedrive.data.model.FileItem
+import remote.lunar.remotedrive.data.model.BackupItem
 import remote.lunar.remotedrive.data.remote.fetchBackupFiles
-import remote.lunar.remotedrive.data.remote.fetchRootFiles
+import remote.lunar.remotedrive.ui.components.BackupItemView
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -44,32 +43,37 @@ fun BackupScreen(navController: NavController) {
                 }
             )
         }
-    ) {
-        var fileList by remember { mutableStateOf<List<FileItem>>(emptyList()) }
+    ) { paddingValues -> // Recebendo os paddingValues do Scaffold
+        var fileList by remember { mutableStateOf<List<BackupItem>>(emptyList()) }
         val scope = rememberCoroutineScope()
 
-        Scaffold {
-            LaunchedEffect(Unit) {
-                scope.launch {
-                    fileList = fetchBackupFiles()
-                }
+        LaunchedEffect(Unit) {
+            scope.launch {
+                fileList = fetchBackupFiles()
             }
+        }
 
-            Box(modifier = Modifier.fillMaxSize()) {
-                if (fileList.isEmpty()) {
-                    Text(
-                        text = "Não há backups",
-                        modifier = Modifier.align(Alignment.Center)
-                    )
-                } else {
-                    LazyColumn(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(16.dp)
-                    ) {
-                        items(fileList.size) { index ->
-                            FileItemView(file = fileList[index], onClick = { /* Ação ao clicar no item */ })
-                        }
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues) // Aplicando padding para evitar sobreposição com a TopAppBar
+        ) {
+            if (fileList.isEmpty()) {
+                Text(
+                    text = "Não há backups",
+                    modifier = Modifier.align(Alignment.Center)
+                )
+            } else {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(16.dp)
+                ) {
+                    items(fileList.size) { index ->
+                        BackupItemView(
+                            backup = fileList[index],
+                            onClick = { /* Ação ao clicar no item */ }
+                        )
                     }
                 }
             }

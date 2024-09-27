@@ -1,16 +1,21 @@
 package remote.lunar.remotedrive.ui.screens.drawer
 
+import FileItemView
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavController
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import kotlinx.coroutines.launch
+import remote.lunar.remotedrive.data.model.FileItem
+import remote.lunar.remotedrive.data.remote.fetchRecentFiles
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -32,10 +37,33 @@ fun RecentScreen(navController: NavController) {
                 }
             )
         }
-    ) {
-        // Conteúdo da tela RecentScreen
-        Box(modifier = Modifier.fillMaxSize()) {
-            Text(text = "Não há recentes", modifier = Modifier.align(Alignment.Center))
+    ) { paddingValues ->
+        var recentFiles by remember { mutableStateOf<List<FileItem>>(emptyList()) }
+        val scope = rememberCoroutineScope()
+
+        LaunchedEffect(Unit) {
+            scope.launch {
+                recentFiles = fetchRecentFiles()
+            }
+        }
+
+        Box(modifier = Modifier
+            .fillMaxSize()
+            .padding(paddingValues)
+        ) {
+            if (recentFiles.isEmpty()) {
+                Text(text = "Não há recentes", modifier = Modifier.align(Alignment.Center))
+            } else {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(16.dp)
+                ) {
+                    items(recentFiles.size) { index ->
+                        FileItemView(file = recentFiles[index], onClick = { /* Ação ao clicar no item */ })
+                    }
+                }
+            }
         }
     }
 }

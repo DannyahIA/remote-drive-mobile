@@ -1,3 +1,5 @@
+package remote.lunar.remotedrive.ui.components
+
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -8,7 +10,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Folder
-import androidx.compose.material.icons.filled.InsertDriveFile
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -20,10 +21,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import remote.lunar.remotedrive.data.model.FileItem
+import remote.lunar.remotedrive.data.model.BackupItem
 
 @Composable
-fun FileItemView(file: FileItem, onClick: () -> Unit) {
+fun BackupItemView(backup: BackupItem, onClick: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -31,14 +32,11 @@ fun FileItemView(file: FileItem, onClick: () -> Unit) {
             .padding(vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        // Ícone para pastas ou arquivos
-        val icon = if (file.Type == "folder") Icons.Filled.Folder else Icons.Filled.InsertDriveFile
-        val iconColor = if (file.Type == "folder") Color(0xFFFFD700) else Color(0xFF6200EE)
-
+        // Ícone para indicar que é um item de backup
         Icon(
-            icon,
+            imageVector = Icons.Filled.Folder,  // Você pode usar um ícone diferente se quiser
             contentDescription = null,
-            tint = iconColor,
+            tint = Color(0xFFFFD700),  // Cor do ícone
             modifier = Modifier.size(40.dp)
         )
 
@@ -48,13 +46,18 @@ fun FileItemView(file: FileItem, onClick: () -> Unit) {
             modifier = Modifier.weight(1f)
         ) {
             Text(
-                text = file.ItemName,
+                text = backup.Name,
                 style = MaterialTheme.typography.bodyLarge,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
             Text(
-                text = "Última modificação: ${file.UpdateAt}",
+                text = "Caminho: ${backup.Path}",
+                style = MaterialTheme.typography.bodySmall,
+                color = Color.Gray
+            )
+            Text(
+                text = "Criado em: ${backup.CreatedAt}",
                 style = MaterialTheme.typography.bodySmall,
                 color = Color.Gray
             )

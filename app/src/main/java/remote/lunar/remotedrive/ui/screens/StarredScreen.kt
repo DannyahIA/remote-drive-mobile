@@ -17,22 +17,23 @@ import androidx.navigation.NavController
 import kotlinx.coroutines.launch
 import remote.lunar.remotedrive.data.model.FileItem
 import remote.lunar.remotedrive.data.remote.fetchRootFiles
+import remote.lunar.remotedrive.data.remote.fetchStarredFiles
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun StarredScreen(navController: NavController) {
-    var fileList by remember { mutableStateOf<List<FileItem>>(emptyList()) }
+    var starredFiles by remember { mutableStateOf<List<FileItem>>(emptyList()) }
     val scope = rememberCoroutineScope()
 
     Scaffold {
         LaunchedEffect(Unit) {
             scope.launch {
-                fileList = fetchRootFiles()
+                starredFiles = fetchStarredFiles()
             }
         }
 
         Box(modifier = Modifier.fillMaxSize()) {
-            if (fileList.isEmpty()) {
+            if (starredFiles.isEmpty()) {
                 Text(
                     text = "Nenhum arquivo disponível",
                     modifier = Modifier.align(Alignment.Center)
@@ -43,8 +44,8 @@ fun StarredScreen(navController: NavController) {
                         .fillMaxSize()
                         .padding(16.dp)
                 ) {
-                    items(fileList.size) { index ->
-                        FileItemView(file = fileList[index], onClick = { /* Ação ao clicar no item */ })
+                    items(starredFiles.size) { index ->
+                        FileItemView(file = starredFiles[index], onClick = { /* Ação ao clicar no item */ })
                     }
                 }
             }
