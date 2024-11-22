@@ -15,16 +15,24 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.CoroutineScope
 import remote.lunar.remotedrive.navigation.RemoteDriveNavHost
 import remote.lunar.remotedrive.ui.components.AppDrawer
 import remote.lunar.remotedrive.ui.components.BottomNavBar
 import remote.lunar.remotedrive.ui.theme.RemoteDriveTheme
+import remote.lunar.remotedrive.worker.SyncWorker
+import java.util.concurrent.TimeUnit
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Chamada do Worker no lugar certo
+        enqueueSyncWorker()
+
         setContent {
             RemoteDriveTheme {
                 val navController = rememberNavController()
@@ -35,7 +43,13 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
+    private fun enqueueSyncWorker() {
+        val syncWorkRequest = PeriodicWorkRequestBuilder<SyncWorker>(15, TimeUnit.MINUTES).build()
+        WorkManager.getInstance(applicationContext).enqueue(syncWorkRequest)
+    }
 }
+
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun MainScreen(

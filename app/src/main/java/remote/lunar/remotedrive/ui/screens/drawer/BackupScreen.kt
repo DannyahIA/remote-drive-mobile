@@ -19,9 +19,9 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
-import remote.lunar.remotedrive.data.model.BackupItem
-import remote.lunar.remotedrive.data.remote.fetchBackupFiles
-import remote.lunar.remotedrive.ui.components.BackupItemView
+
+//import remote.lunar.remotedrive.data.remote.fetchBackupFiles
+//import remote.lunar.remotedrive.ui.components.BackupItemView
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -44,12 +44,11 @@ fun BackupScreen(navController: NavController) {
             )
         }
     ) { paddingValues -> // Recebendo os paddingValues do Scaffold
-        var fileList by remember { mutableStateOf<List<BackupItem>>(emptyList()) }
         val scope = rememberCoroutineScope()
 
         LaunchedEffect(Unit) {
             scope.launch {
-                fileList = fetchBackupFiles()
+                //fileList = fetchBackupFiles()
             }
         }
 
@@ -58,25 +57,10 @@ fun BackupScreen(navController: NavController) {
                 .fillMaxSize()
                 .padding(paddingValues) // Aplicando padding para evitar sobreposição com a TopAppBar
         ) {
-            if (fileList.isEmpty()) {
-                Text(
-                    text = "Não há backups",
-                    modifier = Modifier.align(Alignment.Center)
-                )
-            } else {
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(16.dp)
-                ) {
-                    items(fileList.size) { index ->
-                        BackupItemView(
-                            backup = fileList[index],
-                            onClick = { /* Ação ao clicar no item */ }
-                        )
-                    }
-                }
-            }
+            Text(
+                text = "Não há backups",
+                modifier = Modifier.align(Alignment.Center)
+            )
         }
     }
 }

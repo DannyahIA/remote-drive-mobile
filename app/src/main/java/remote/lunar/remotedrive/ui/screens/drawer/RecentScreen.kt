@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import kotlinx.coroutines.launch
 import remote.lunar.remotedrive.data.model.FileItem
-import remote.lunar.remotedrive.data.remote.fetchRecentFiles
+//import remote.lunar.remotedrive.data.remote.fetchRecentFiles
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -43,7 +43,7 @@ fun RecentScreen(navController: NavController) {
 
         LaunchedEffect(Unit) {
             scope.launch {
-                recentFiles = fetchRecentFiles()
+                //recentFiles = fetchRecentFiles()
             }
         }
 
@@ -51,19 +51,7 @@ fun RecentScreen(navController: NavController) {
             .fillMaxSize()
             .padding(paddingValues)
         ) {
-            if (recentFiles.isEmpty()) {
-                Text(text = "Não há recentes", modifier = Modifier.align(Alignment.Center))
-            } else {
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(16.dp)
-                ) {
-                    items(recentFiles.size) { index ->
-                        FileItemView(file = recentFiles[index], onClick = { /* Ação ao clicar no item */ })
-                    }
-                }
-            }
+            Text(text = "Não há recentes", modifier = Modifier.align(Alignment.Center))
         }
     }
 }

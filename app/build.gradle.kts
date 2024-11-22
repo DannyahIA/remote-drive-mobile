@@ -1,7 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
-    kotlin("plugin.serialization") version "1.9.22"
+    kotlin("plugin.serialization")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -63,6 +64,16 @@ dependencies {
     implementation(libs.volley)
     implementation(libs.firebase.crashlytics.buildtools)
     implementation(libs.androidx.material.icons.extended)
+    implementation(libs.androidx.work.runtime.ktx)
+
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.gson.v288)
+
+    implementation(libs.androidx.room.runtime)
+    annotationProcessor(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
 
     // Testes
     testImplementation(libs.junit)

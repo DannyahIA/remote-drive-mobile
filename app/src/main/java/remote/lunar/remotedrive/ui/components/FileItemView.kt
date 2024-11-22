@@ -10,11 +10,17 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Folder
 import androidx.compose.material.icons.filled.InsertDriveFile
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,7 +29,9 @@ import androidx.compose.ui.unit.dp
 import remote.lunar.remotedrive.data.model.FileItem
 
 @Composable
-fun FileItemView(file: FileItem, onClick: () -> Unit) {
+fun FileItemView(file: FileItem, onClick: () -> Unit, onDelete: (FileItem) -> Unit, onEdit: (FileItem) -> Unit) {
+    var expanded by remember { mutableStateOf(false) } // Controle do menu
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -60,8 +68,31 @@ fun FileItemView(file: FileItem, onClick: () -> Unit) {
             )
         }
 
-        IconButton(onClick = { /* Menu de opções */ }) {
+        IconButton(
+            onClick = { expanded = !expanded } // Controlar o estado do menu
+        ) {
             Icon(Icons.Filled.MoreVert, contentDescription = "Opções")
+        }
+
+        // Menu com opções de editar e excluir
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false } // Fecha o menu quando clicar fora
+        ) {
+            DropdownMenuItem(
+                text = { Text("Editar") },
+                onClick = {
+                    onEdit(file) // Chama a função de edição
+                    expanded = false // Fecha o menu
+                }
+            )
+            DropdownMenuItem(
+                text = { Text("Excluir") },
+                onClick = {
+                    onDelete(file) // Chama a função de exclusão
+                    expanded = false // Fecha o menu
+                }
+            )
         }
     }
 }

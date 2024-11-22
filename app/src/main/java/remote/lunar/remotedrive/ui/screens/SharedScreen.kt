@@ -16,8 +16,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import kotlinx.coroutines.launch
 import remote.lunar.remotedrive.data.model.FileItem
-import remote.lunar.remotedrive.data.remote.fetchRootFiles
-import remote.lunar.remotedrive.data.remote.fetchSharedFiles
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -28,27 +26,15 @@ fun SharedScreen(navController: NavController) {
     Scaffold {
         LaunchedEffect(Unit) {
             scope.launch {
-                sharedFiles = fetchSharedFiles()
+                //sharedFiles = fetchSharedFiles()
             }
         }
 
         Box(modifier = Modifier.fillMaxSize()) {
-            if (sharedFiles.isEmpty()) {
-                Text(
-                    text = "Nenhum arquivo compartilhado",
-                    modifier = Modifier.align(Alignment.Center)
-                )
-            } else {
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(16.dp)
-                ) {
-                    items(sharedFiles.size) { index ->
-                        FileItemView(file = sharedFiles[index], onClick = { /* Ação ao clicar no item */ })
-                    }
-                }
-            }
+            Text(
+                text = "Nenhum arquivo compartilhado",
+                modifier = Modifier.align(Alignment.Center)
+            )
         }
     }
 }

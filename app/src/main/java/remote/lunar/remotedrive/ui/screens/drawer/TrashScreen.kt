@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import kotlinx.coroutines.launch
 import remote.lunar.remotedrive.data.model.FileItem
-import remote.lunar.remotedrive.data.remote.fetchTrashFiles
+//import remote.lunar.remotedrive.data.remote.fetchTrashFiles
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -43,7 +43,7 @@ fun TrashScreen(navController: NavController) {
 
         LaunchedEffect(Unit) {
             scope.launch {
-                trashFiles = fetchTrashFiles()
+                //trashFiles = fetchTrashFiles()
             }
         }
 
@@ -51,19 +51,7 @@ fun TrashScreen(navController: NavController) {
             .fillMaxSize()
             .padding(paddingValues)
         ) {
-            if (trashFiles.isEmpty()) {
-                Text(text = "Não há arquivos na lixeira", modifier = Modifier.align(Alignment.Center))
-            } else {
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(16.dp)
-                ) {
-                    items(trashFiles.size) { index ->
-                        FileItemView(file = trashFiles[index], onClick = { /* Ação ao clicar no item */ })
-                    }
-                }
-            }
+            Text(text = "Não há arquivos na lixeira", modifier = Modifier.align(Alignment.Center))
         }
     }
 }

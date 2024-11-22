@@ -38,9 +38,9 @@ fun BottomNavBar(navController: NavHostController) {
 }
 
 sealed class BottomNavItem(val label: String, val icon: androidx.compose.ui.graphics.vector.ImageVector, val route: String) {
-    object Files : BottomNavItem("Arquivos", Icons.Default.Folder, "FileScreen")
-    object Starred : BottomNavItem("Com estrela", Icons.Default.Star, "StarredScreen")
-    object Shared : BottomNavItem("Compartilhado", Icons.Default.Share, "SharedScreen")
+    data object Files : BottomNavItem("Arquivos", Icons.Default.Folder, "FileScreen")
+    data object Starred : BottomNavItem("Com estrela", Icons.Default.Star, "StarredScreen")
+    data object Shared : BottomNavItem("Compartilhado", Icons.Default.Share, "SharedScreen")
 }
 
 @Preview
